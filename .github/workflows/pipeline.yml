@@ -36,6 +36,9 @@ jobs:
           KUBE_URL: ${{ secrets.KUBE_URL }}
           KUBE_CA_PEM: ${{ secrets.KUBE_CA_PEM }}
           KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
+          NEXUS_USER: ${{ secrets.NEXUS_USER }}
+          NEXUS_TOKEN: ${{ secrets.NEXUS_TOKEN }}
+          NEXUS_URL: ${{ secrets.NEXUS_URL }}
         run: |
           export RELEASE_DATE="$(date -I'seconds' -u)"
           mkdir $DESTINATION_PATH
