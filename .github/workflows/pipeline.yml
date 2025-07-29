@@ -20,11 +20,24 @@ jobs:
           state: 'pending'
           deployment-id: ${{ github.event.deployment.id }}
       - name: Deploy my app
+        env:
+          GIT_DEPTH: 1
+          ENVIRONMENT_VARIABLES_PREFIX: MIA_
+          BASE_PATH: $GITHUB_WORKSPACE/configuration
+          OVERLAY_PATH: "$GITHUB_WORKSPACE/overlays/$ENVIRONMENT_NAME"
+          DESTINATION_PATH: "$GITHUB_WORKSPACE/interpolated-files"
+          GENERATE_FILE: "$GITHUB_WORKSPACE/mlp.yaml"
+          VARIABLES_FILE: "$GITHUB_WORKSPACE/overlays/$ENVIRONMENT_NAME/variables.env"
         run: |
-          # add your deployment code here
-          echo Deploying...
-          sleep 10s
-          echo Done!
+          export RELEASE_DATE="$(date -I'seconds' -u)"
+          echo $RELEASE_DATE
+          echo $GIT_DEPTH
+          echo $ENVIRONMENT_VARIABLES_PREFIX
+          echo $BASE_PATH
+          echo $OVERLAY_PATH
+          echo $DESTINATION_PATH
+          echo $GENERATE_FILE
+          echo $VARIABLES_FILE
       - name: Update deployment status (success)
         if: success()
         uses: chrnorm/deployment-status@v2
