@@ -7,9 +7,10 @@ jobs:
     concurrency: ENVIRONMENT_NAME
     permissions:
       deployments: write
+      contents: read
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - name: Update deployment status (pending)
         if: success()
         uses: chrnorm/deployment-status@v2
