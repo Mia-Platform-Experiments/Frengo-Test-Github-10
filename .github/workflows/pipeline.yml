@@ -41,7 +41,7 @@ jobs:
           NEXUS_URL: ${{ secrets.NEXUS_URL }}
         run: |
           export RELEASE_DATE="$(date -I'seconds' -u)"
-          export KUBE_CA_PEM_PATH="${{ github.workspace }}/kube_ca.pem"
+          export KUBE_CA_PEM_PATH="${{ github.workspace }}/kube_ca.pem" && touch $KUBE_CA_PEM_PATH
           echo $KUBE_CA_PEM > $KUBE_CA_PEM_PATH
           mkdir $DESTINATION_PATH
           test -f $VARIABLES_FILE && set -a && source $VARIABLES_FILE
