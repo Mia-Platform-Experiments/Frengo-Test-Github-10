@@ -42,8 +42,8 @@ jobs:
         run: |
           export RELEASE_DATE="$(date -I'seconds' -u)"
           export KUBE_CA_PEM_PATH=/tmp/kube-ca.pem
-          echo ${KUBE_CA_PEM} > ${KUBE_CA_PEM_PATH}
-          openssl x509 -in ${KUBE_CA_PEM_PATH} -text -noout
+          echo -e "${KUBE_CA_PEM}" > "${KUBE_CA_PEM_PATH}"
+          cat ${KUBE_CA_PEM_PATH}
           mkdir ${DESTINATION_PATH}
           test -f "${VARIABLES_FILE}" && set -a && source "${VARIABLES_FILE}"
           test -f "${GENERATE_FILE}" && mlp generate -c "${GENERATE_FILE}" -e "${ENVIRONMENT_PREFIX}" -e "${ENVIRONMENT_VARIABLES_PREFIX}" -o "${OVERLAY_PATH}"
