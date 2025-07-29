@@ -42,7 +42,7 @@ jobs:
         run: |
           export RELEASE_DATE="$(date -I'seconds' -u)"
           export KUBE_CA_PEM_PATH=/tmp/kube-ca.pem
-          > "${KUBE_CA_PEM_PATH}" <<< "${KUBE_CA_PEM}"
+          > ${KUBE_CA_PEM_PATH} cat <<< "${KUBE_CA_PEM}"
           cat ${KUBE_CA_PEM_PATH}
           mkdir ${DESTINATION_PATH}
           test -f "${VARIABLES_FILE}" && set -a && source "${VARIABLES_FILE}"
