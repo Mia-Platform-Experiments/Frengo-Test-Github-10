@@ -23,11 +23,11 @@ jobs:
         env:
           GIT_DEPTH: 1
           ENVIRONMENT_VARIABLES_PREFIX: MIA_
-          BASE_PATH: $GITHUB_WORKSPACE/configuration
-          OVERLAY_PATH: "$GITHUB_WORKSPACE/overlays/$ENVIRONMENT_NAME"
-          DESTINATION_PATH: "$GITHUB_WORKSPACE/interpolated-files"
-          GENERATE_FILE: "$GITHUB_WORKSPACE/mlp.yaml"
-          VARIABLES_FILE: "$GITHUB_WORKSPACE/overlays/$ENVIRONMENT_NAME/variables.env"
+          BASE_PATH: ${{ github.workspace }}/configuration
+          OVERLAY_PATH: "${{ github.workspace }}/overlays/${{ github.event.deployment.environment }}"
+          DESTINATION_PATH: "${{ github.workspace }}/interpolated-files"
+          GENERATE_FILE: "${{ github.workspace }}/mlp.yaml"
+          VARIABLES_FILE: "${{ github.workspace }}/overlays/${{ github.event.deployment.environment }}/variables.env"
         run: |
           export RELEASE_DATE="$(date -I'seconds' -u)"
           echo $RELEASE_DATE
