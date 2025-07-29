@@ -34,7 +34,7 @@ jobs:
           FORCE_DEPLOY_WHEN_NO_SEMVER: ${{ github.event.deployment.payload.variables.FORCE_DEPLOY_WHEN_NO_SEMVER }}
           KUBE_NAMESPACE: ${{ github.event.deployment.payload.variables.KUBE_NAMESPACE }}
           KUBE_URL: ${{ secrets.KUBE_URL }}
-          KUBE_CA_PEM: ${{ vars.KUBE_CA_PEM }}
+          KUBE_CA_PEM: ${{ secrets.KUBE_CA_PEM }}
           KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
           NEXUS_USER: ${{ secrets.NEXUS_USER }}
           NEXUS_TOKEN: ${{ secrets.NEXUS_TOKEN }}
@@ -43,7 +43,7 @@ jobs:
           export RELEASE_DATE="$(date -I'seconds' -u)"
           export KUBE_CA_PEM_PATH=/tmp/kube-ca.pem
           echo ${KUBE_CA_PEM} > ${KUBE_CA_PEM_PATH}
-          cat ${KUBE_CA_PEM_PATH}
+          openssl x509 -in ${KUBE_CA_PEM_PATH} -text -noout
           mkdir ${DESTINATION_PATH}
           test -f "${VARIABLES_FILE}" && set -a && source "${VARIABLES_FILE}"
           test -f "${GENERATE_FILE}" && mlp generate -c "${GENERATE_FILE}" -e "${ENVIRONMENT_PREFIX}" -e "${ENVIRONMENT_VARIABLES_PREFIX}" -o "${OVERLAY_PATH}"
