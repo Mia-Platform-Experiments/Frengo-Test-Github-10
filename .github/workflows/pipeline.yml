@@ -37,6 +37,7 @@ jobs:
           echo $OVERLAY_PATH
           echo $DESTINATION_PATH
           echo $GENERATE_FILE
+          cat $GENERATE_FILE
           echo $VARIABLES_FILE
       - name: Update deployment status (success)
         if: success()
