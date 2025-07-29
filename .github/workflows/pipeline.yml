@@ -31,8 +31,7 @@ jobs:
           ENVIRONMENT_TO_DEPLOY: ${{ github.event.deployment.environment }}
           ENVIRONMENT_PREFIX: ${{ github.event.deployment.environment }}_
         run: |
-          echo $ENVIRONMENT_TO_DEPLOY
-          echo $ENVIRONMENT_PREFIX
+          echo ${{ toJson(github.event) }}
           # export RELEASE_DATE="$(date -I'seconds' -u)"
           # mkdir $DESTINATION_PATH
           # test -f $VARIABLES_FILE && set -a && source $VARIABLES_FILE
