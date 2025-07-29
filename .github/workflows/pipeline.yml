@@ -29,7 +29,7 @@ jobs:
           GENERATE_FILE: "${{ github.workspace }}/mlp.yaml"
           VARIABLES_FILE: "${{ github.workspace }}/overlays/${{ github.event.deployment.environment }}/variables.env"
           ENVIRONMENT_TO_DEPLOY: ${{ github.event.deployment.environment }}
-          ENVIRONMENT_PREFIX: $ENVIRONMENT_TO_DEPLOY_
+          ENVIRONMENT_PREFIX: ${{ github.event.deployment.environment }}_
         run: |
           echo $ENVIRONMENT_TO_DEPLOY
           echo $ENVIRONMENT_PREFIX
