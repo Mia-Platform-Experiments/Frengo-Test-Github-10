@@ -34,7 +34,7 @@ jobs:
           FORCE_DEPLOY_WHEN_NO_SEMVER: ${{ github.event.deployment.payload.variables.FORCE_DEPLOY_WHEN_NO_SEMVER }}
           KUBE_NAMESPACE: ${{ github.event.deployment.payload.variables.KUBE_NAMESPACE }}
           KUBE_URL: ${{ secrets.KUBE_URL }}
-          KUBE_CA_PEM: ${{ variables.KUBE_CA_PEM }}
+          KUBE_CA_PEM: ${{ vars.KUBE_CA_PEM }}
           KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
           NEXUS_USER: ${{ secrets.NEXUS_USER }}
           NEXUS_TOKEN: ${{ secrets.NEXUS_TOKEN }}
