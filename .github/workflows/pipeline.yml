@@ -41,9 +41,10 @@ jobs:
           NEXUS_URL: ${{ secrets.NEXUS_URL }}
         run: |
           export RELEASE_DATE="$(date -I'seconds' -u)"
-          export KUBE_CA_PEM_PATH=/tmp/kube-ca.pem
-          > ${KUBE_CA_PEM_PATH} cat <<< "${KUBE_CA_PEM}"
-          cat ${KUBE_CA_PEM_PATH}
+          tee /tmp/ca.pem > /dev/null << EOF
+          ${KUBE_CA_PEM}
+          EOF
+          cat /tmp/ca.pem
           mkdir ${DESTINATION_PATH}
           test -f "${VARIABLES_FILE}" && set -a && source "${VARIABLES_FILE}"
           test -f "${GENERATE_FILE}" && mlp generate -c "${GENERATE_FILE}" -e "${ENVIRONMENT_PREFIX}" -e "${ENVIRONMENT_VARIABLES_PREFIX}" -o "${OVERLAY_PATH}"
@@ -51,7 +52,7 @@ jobs:
           mlp interpolate -e "${ENVIRONMENT_PREFIX}" -e "${ENVIRONMENT_VARIABLES_PREFIX}" -f "${BASE_PATH}" -o "${BASE_PATH}"
           mlp interpolate -e "${ENVIRONMENT_PREFIX}" -e "${ENVIRONMENT_VARIABLES_PREFIX}" -f "${OVERLAY_PATH}" -o "${OVERLAY_PATH}"
           mlp kustomize "${OVERLAY_PATH}" -o "${DESTINATION_PATH}/kustomize-output.yaml"
-          mlp deploy --ensure-namespace=false --server "${KUBE_URL}" --certificate-authority "${KUBE_CA_PEM_PATH}" --token "${KUBE_TOKEN}" --deploy-type "${DEPLOY_TYPE}" --force-deploy-when-no-semver="${FORCE_DEPLOY_WHEN_NO_SEMVER}" -f "${DESTINATION_PATH}/kustomize-output.yaml" -n "${KUBE_NAMESPACE}" --verbose 10
+          mlp deploy --ensure-namespace=false --server "${KUBE_URL}" --certificate-authority "/tmp/ca.pem" --token "${KUBE_TOKEN}" --deploy-type "${DEPLOY_TYPE}" --force-deploy-when-no-semver="${FORCE_DEPLOY_WHEN_NO_SEMVER}" -f "${DESTINATION_PATH}/kustomize-output.yaml" -n "${KUBE_NAMESPACE}" --verbose 10
           # mlp deploy --ensure-namespace=false --server "${KUBE_URL}" --insecure-skip-tls-verify --token "${KUBE_TOKEN}" --deploy-type "${DEPLOY_TYPE}" --force-deploy-when-no-semver="${FORCE_DEPLOY_WHEN_NO_SEMVER}" -f "${DESTINATION_PATH}/kustomize-output.yaml" -n "${KUBE_NAMESPACE}" --verbose 10
       - name: Update deployment status (success)
         if: success()
