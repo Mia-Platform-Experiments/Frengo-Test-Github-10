@@ -72,14 +72,14 @@ spec:
             - '-c'
             - /etc/envoy/envoy.json
             - '-l'
-            - '{{LOG_LEVEL}}'
+            - 'debug'
             - '--log-format'
             - '{"level":"%l","time":"%Y-%m-%dT%T.%fZ","scope":"%n","message":"%j"}'
             - '--drain-time-s'
             - '50'
           env:
             - name: LOG_LEVEL
-              value: '{{LOG_LEVEL}}'
+              value: 'debug'
             - name: MICROSERVICE_GATEWAY_SERVICE_NAME
               value: microservice-gateway
             - name: TRUSTED_PROXIES
