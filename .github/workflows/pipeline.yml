@@ -9,6 +9,7 @@ jobs:
       deployments: write
       contents: read
     runs-on: ubuntu-latest
+    container: miaplatform/mlp:2.1.0
     steps:
       - uses: actions/checkout@v4
       - name: Update deployment status (pending)
